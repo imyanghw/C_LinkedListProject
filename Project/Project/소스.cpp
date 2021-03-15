@@ -3,10 +3,10 @@
 #include<string.h>
 #include<conio.h>
 
-#define MAXNAME 15	//이름의 최대길이를 15
+#define MAXNAME 10	//이름의 최대길이를 15
 #define MAXBIRTHDAY 8 //생년월일의 최대길이를 8
 #define MAXPHONE 13	//전화번호의 최대길이를 15
-#define MAXADDRRESS 20	//주소의 최대길이를 50
+#define MAXADDRRESS 50	//주소의 최대길이를 50
 
 typedef struct Addbook {
 	char name[MAXNAME]; //이름
@@ -302,9 +302,56 @@ void deleteList(addbook *head) //데이터 삭제
 	}
 }
 
-void selectonSort(addbook *head) //선택정렬을 구현하여 이름을 오름차순으로 정렬
+void selectonSort(addbook *head) //이름을 오름차순으로 정렬
 {
+	addbook *compNode; //기준위치를 가르키는 노드
+	addbook *nextNode; //비교대상 노드
+	char temp[50];
 
+	if (head->link != NULL)
+	{
+		compNode = head->link;
+		nextNode = compNode->link;
+		
+		for (; compNode != NULL; compNode = compNode->link)
+			//기준위치 노드를 link로 연결해가며 반복문을 수행함
+		{
+			nextNode = compNode->link; //비교대상 노드의 시작은 항상 기준위치 다음부터
+			for (; nextNode != NULL; nextNode = nextNode->link)
+				//비교대상 노드를 link로 연결해가며 마지막 노드까지 반복문 수행
+			{
+				if (strcmp(compNode->name, nextNode->name) > 0) //기준위치 노드 이름과 비교대상 노드 이름을 비교하여 기준위치가 더 크다면 수행함
+				{
+					strcpy(temp, compNode->name);
+					strcpy(compNode->name, nextNode->name);
+					strcpy(nextNode->name, temp);
+
+					strcpy(temp, compNode->birthday);
+					strcpy(compNode->birthday, nextNode->birthday);
+					strcpy(nextNode->birthday, temp);
+
+					strcpy(temp, compNode->phone);
+					strcpy(compNode->phone, nextNode->phone);
+					strcpy(nextNode->phone, temp);
+
+					strcpy(temp, compNode->address);
+					strcpy(compNode->address, nextNode->address);
+					strcpy(nextNode->address, temp);
+				}
+			}
+		}
+		printf("\n 정렬을 완료했습니다.\n");
+		printf("(Press enter to menu)\n");
+		fflush(stdin);
+		_getch();
+	}
+	else
+	{
+		printf("\n 정렬할 데이터가 없습니다.\n");
+		printf("(Press enter to menu)\n");
+		fflush(stdin);
+		_getch();
+	}
 }
 
 int saveData(addbook *head)
