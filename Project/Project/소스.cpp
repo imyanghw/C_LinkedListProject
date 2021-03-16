@@ -24,9 +24,7 @@ void findList(addbook*); //리스트 검색 함수
 void deleteList(addbook*); //리스트 삭제 함수
 void selectionSort(addbook*); //리스트 정렬 함수
 int saveData(addbook *); //등록된 회원정보를 파일에 저장하는 함수
-void getFile();
 
-int count = 0;
 addbook *head = NULL; //head 생성
 
 int main()
@@ -34,8 +32,7 @@ int main()
 	int checkSave;
 	int menu; //switch문을 위한 메뉴선택
 	head = createList(); //head 노드에 공백리스트 생성 및 초기화
-
-	getFile();
+	
 	while (1) {
 		system("cls");
 		printf("┏━━━━━━━━━━━━━━━━━━┓\n");
@@ -96,7 +93,7 @@ int main()
 			}
 			else {
 				printf("┏━━━━━━━━━━━━━━━━━━━━━━┓\n");
-				printf("┃저장에 실패하였습니다 ┃\n");
+				printf("┃ 저장에 실패하였습니다┃\n");
 				printf("┖━━━━━━━━━━━━━━━━━━━━━━┚\n");
 				getchar();
 			}
@@ -104,15 +101,19 @@ int main()
 
 		case 7:
 			system("cls");
-			printf("프로그램을 종료합니다.\n");
+			printf("┏━━━━━━━━━━━━━━━━━━━━━━┓\n");
+			printf("┃ 프로그램을 종료합니다┃\n");
+			printf("┖━━━━━━━━━━━━━━━━━━━━━━┚\n");
 			return 0;
 
 		default:
 			system("cls");
-			printf("메뉴를 다시 선택해 주세요(Enter)");
+			printf("┏━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n");
+			printf("┃ 메뉴를 다시 선택해 주세요┃\n");
+			printf("┖━━━━━━━━━━━━━━━━━━━━━━━━━━┚\n");
 			break;
 		}
-		printf("\nPress any key to continue.\n");
+		printf("\nPress any key to continue.");
 		_getch();
 	}
 	return 0;
@@ -247,7 +248,7 @@ void findList(addbook *head) //리스트에 있는 내용을 검색
 			printf("┃전 화 번 호 : %s\n", tempNode->phone);
 			printf("┃주 소: %s\n", tempNode->address);
 			printf("┖━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┚\n");
-			printf("(Press enter to menu)\n");
+			printf("Press enter to menu\n");
 
 			_getch();
 			check = 1; //회원을 찾음
@@ -374,6 +375,7 @@ int saveData(addbook *head) //저장된 회원의 정보를 파일에 저장함
 	return 0;
 }
 
+/*
 void getFile()
 {
 	FILE *fp;
@@ -392,29 +394,22 @@ void getFile()
 		while (!feof(fp))
 		{
 			newNode = (addbook *)malloc(sizeof(addbook));
-			fgets(buffer, 30, fp);
-
+			fseek(fp, 0, SEEK_SET);
 			if (strlen(buffer) == 0)
 			{
 				break;
 			}
-			buffer[strlen(buffer) - 1] = '\0';
-			fscanf(fp, "%s", newNode->name);
-
-			fgets(buffer, 30, fp);
-			buffer[strlen(buffer) - 1] = '\0';
-			fscanf(fp, "%s", newNode->birthday);
-
-			fgets(buffer, 30, fp);
-			buffer[strlen(buffer) - 1] = '\0';
-			fscanf(fp, "%s", newNode->phone);
-
-			fgets(buffer, 30, fp);
-			if (buffer[strlen(buffer) - 1] == '\n') 
-			{
-				buffer[strlen(buffer) - 1] = '\0';
-			}
-			fscanf(fp, "%s", newNode->address);
+			fread(buffer, 3, 1, fp);
+			
+			fseek(fp, 1, SEEK_CUR);
+			fread(buffer, 6, 1, fp);
+			
+			fseek(fp, 1, SEEK_CUR);
+			fread(buffer, 11, 1, fp);
+			
+			fseek(fp, 1, SEEK_CUR);
+			fread(buffer, 7, 1, fp);
+			
 
 			if (head == NULL)
 			{
@@ -428,8 +423,8 @@ void getFile()
 				newNode->link = NULL;
 				tmp = newNode;
 			}
-			count = count + 1;
 		}
 	}
 	fclose(fp);
 }
+*/
