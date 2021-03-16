@@ -24,15 +24,18 @@ void findList(addbook*); //¸®½ºÆ® °Ë»ö ÇÔ¼ö
 void deleteList(addbook*); //¸®½ºÆ® »èÁ¦ ÇÔ¼ö
 void selectionSort(addbook*); //¸®½ºÆ® Á¤·Ä ÇÔ¼ö
 int saveData(addbook *); //µî·ÏµÈ È¸¿øÁ¤º¸¸¦ ÆÄÀÏ¿¡ ÀúÀåÇÏ´Â ÇÔ¼ö
+void getFile();
 
+int count = 0;
+addbook *head = NULL; //head »ý¼º
 
 int main()
 {
 	int checkSave;
 	int menu; //switch¹®À» À§ÇÑ ¸Þ´º¼±ÅÃ
-	addbook *head; //head »ý¼º
 	head = createList(); //head ³ëµå¿¡ °ø¹é¸®½ºÆ® »ý¼º ¹× ÃÊ±âÈ­
 
+	getFile();
 	while (1) {
 		system("cls");
 		printf("¦®¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¯\n");
@@ -84,20 +87,24 @@ int main()
 		case 6:
 			system("cls");
 			printf("µ¥ÀÌÅÍ¸¦ ÆÄÀÏ¿¡ ÀúÀåÇÕ´Ï´Ù.\n");
-			checkSave = savaData(Head);
+			checkSave = saveData(head);
 			if (checkSave == 0) {
-				printf("\n==ÀúÀåÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù==");
-				fflush(stdin); getchar();
+				printf("¦®¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¯\n");
+				printf("¦­ ÀúÀåÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù¦­\n");
+				printf("¦Å¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦Ã\n");
+				getchar();
 			}
 			else {
-				printf("\n==ÀúÀå¿¡ ½ÇÆÐÇÏ¿´½À´Ï´Ù==");
-				fflush(stdin); getchar();
+				printf("¦®¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¯\n");
+				printf("¦­ÀúÀå¿¡ ½ÇÆÐÇÏ¿´½À´Ï´Ù ¦­\n");
+				printf("¦Å¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦Ã\n");
+				getchar();
 			}
 			break;
 
 		case 7:
 			system("cls");
-			printf("Á¾·áÇÕ´Ï´Ù.\n");
+			printf("ÇÁ·Î±×·¥À» Á¾·áÇÕ´Ï´Ù.\n");
 			return 0;
 
 		default:
@@ -132,28 +139,27 @@ void inputData(addbook* head) //¸®½ºÆ®¿¡ ³ëµå Ãß°¡
 	{
 		temp = (addbook *)malloc(sizeof(addbook));
 
-		printf("\n Press <quit> or <exit> or <end> to Menu!!\n");
+		printf("\nPress <quit> or <exit> or <end> to Menu!!\n");
 		
-		fflush(stdin);
-		printf("ÀÌ ¸§:");
+		printf("ÀÌ ¸§: ");
 		scanf("%s", _name);
+		getchar();
 
 		if (strcmp(_name, "quit") == 0 || strcmp(_name, "exit") == 0 || strcmp(_name, "end") == 0)
 		{
 			break; //ÇØ´çµÇ´Â ´Ü¾î¸¦ À¯µµÇÏ¿© ÀÔ·ÂÀ» Á¾·á½ÃÅ´
 		}
 
-		fflush(stdin);
-		printf("»ý ³â ¿ù ÀÏ:");
+		printf("»ý ³â ¿ù ÀÏ: ");
 		scanf("%s", _birthday);
+		getchar();
 
-		fflush(stdin);
-		printf("Àü È­ ¹ø È£ :");
+		printf("Àü È­ ¹ø È£ [-]ÇÏÀÌÇÂ Á¦¿ÜÇÏ°í ÀÔ·Â : ");
 		scanf("%s", _phone);
+		getchar();
 
-		fflush(stdin);
-		printf("ÁÖ ¼Ò:");
-		scanf("%s", _address);
+		printf("ÁÖ ¼Ò: ");
+		gets_s(_address, MAXADDRRESS);
 
 		//ÀÔ·Â¹ÞÀº °ªÀ» ÀÓ½Ã³ëµå¿¡ ÀúÀå½ÃÄÑ³í´Ù.
 		strcpy(temp->name, _name);
@@ -189,28 +195,33 @@ void printList(addbook* head) //¸®½ºÆ® ³ëµå Ãâ·Â
 
 	if (tempNode == NULL) //ÀúÀåµÈ µ¥ÀÌÅÍ°¡ ºñ¾îÀÖ´Ù¸é
 	{
-		printf("ÇöÀç µî·ÏµÈ Á¤º¸°¡ ¾ø½À´Ï´Ù. (Press enter to menu)\n");
-		fflush(stdin);
+		printf("¦®¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¯\n");
+		printf("¦­ ÇöÀç µî·ÏµÈ Á¤º¸°¡ ¾ø½À´Ï´Ù. (Press enter to menu)¦­\n");
+		printf("¦Å¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦Ã\n");
 		_getch();
 	}
 
 	while (tempNode != NULL)
 	{
-		printf("\n<%d>¹øÂ° È¸¿ø\n", num++);
-		printf("ÀÌ ¸§: %s\n", tempNode->name);
-		printf("»ý ³â ¿ù ÀÏ: %s\n", tempNode->birthday);
-		printf("Àü È­ ¹ø È£ : %s\n", tempNode->phone);
-		printf("ÁÖ ¼Ò: %s\n", tempNode->address);
+		printf("¦®¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¯\n");
+		printf("¦­<%d>¹øÂ° È¸¿ø\n", num++);
+		printf("¦­ÀÌ ¸§: %s\n", tempNode->name);
+		printf("¦­»ý ³â ¿ù ÀÏ: %s\n", tempNode->birthday);
+		printf("¦­Àü È­ ¹ø È£ : %s\n", tempNode->phone);
+		printf("¦­ÁÖ ¼Ò: %s\n", tempNode->address);
+		printf("¦Å¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦Ã\n");
 
 		tempNode = tempNode->link; //´ÙÀ½ ³ëµå·Î ÀÌµ¿
 		if (tempNode == NULL) {
-			printf("¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬\n");
-			printf("¸¶Áö¸· È¸¿øÀÔ´Ï´Ù(Press enter to menu)");
+			printf("¦®¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¯\n");
+			printf("¦­ ¸¶Áö¸· È¸¿øÀÔ´Ï´Ù(Press enter to menu) ¦­\n");
+			printf("¦Å¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦Ã\n");
 		}
 		else {
-			printf("´ÙÀ½ È¸¿ø º¸±â(Enter)\n");
+			printf("¦®¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¯\n");
+			printf("¦­ ´ÙÀ½ È¸¿ø º¸±â(Enter)      ¦­\n");
+			printf("¦Å¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦Ã\n");
 		}
-		fflush(stdin);
 		_getch();
 	}
 }
@@ -223,23 +234,21 @@ void findList(addbook *head) //¸®½ºÆ®¿¡ ÀÖ´Â ³»¿ëÀ» °Ë»ö
 	char member[MAXNAME];
 
 	printf("Ã£À¸½Ç È¸¿øÀÇ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä : ");
-	fflush(stdin);
 	scanf("%s", member);
 
 	while (tempNode != NULL)
 	{
 		if (strcmp(tempNode->name, member) == 0)
 		{
-			printf("¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬\n");
-			printf("È¸¿øÀ» Ã£¾Ò½À´Ï´Ù.\n");
-			printf("ÀÌ ¸§: %s\n", tempNode->name);
-			printf("»ý ³â ¿ù ÀÏ: %s\n", tempNode->birthday);
-			printf("Àü È­ ¹ø È£ : %s\n", tempNode->phone);
-			printf("ÁÖ ¼Ò: %s\n", tempNode->address);
-			printf("¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬\n");
+			printf("¦®¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¯\n");
+			printf("¦­È¸¿øÀ» Ã£¾Ò½À´Ï´Ù.\n");
+			printf("¦­ÀÌ ¸§: %s\n", tempNode->name);
+			printf("¦­»ý ³â ¿ù ÀÏ: %s\n", tempNode->birthday);
+			printf("¦­Àü È­ ¹ø È£ : %s\n", tempNode->phone);
+			printf("¦­ÁÖ ¼Ò: %s\n", tempNode->address);
+			printf("¦Å¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦Ã\n");
 			printf("(Press enter to menu)\n");
 
-			fflush(stdin);
 			_getch();
 			check = 1; //È¸¿øÀ» Ã£À½
 			tempNode = NULL; //È¸¿øÀ» Ã£¾ÒÀ¸¹Ç·Î while ·çÇÁ¸¦ ºüÁ®³ª¿À±â À§ÇÑ ¼öÇà
@@ -252,9 +261,7 @@ void findList(addbook *head) //¸®½ºÆ®¿¡ ÀÖ´Â ³»¿ëÀ» °Ë»ö
 
 	if (check == 0) //È¸¿øÀÌ ¾ø´Ù¸é
 	{
-		printf("\n Ã£À¸½Ã´Â È¸¿øÁ¤º¸°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.\n");
-		printf("(Press enter to menu)\n");
-		fflush(stdin);
+		printf("\nÃ£À¸½Ã´Â È¸¿øÁ¤º¸°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù. (Press enter to menu)\n");
 		_getch();
 	}
 }
@@ -267,7 +274,6 @@ void deleteList(addbook *head) //µ¥ÀÌÅÍ »èÁ¦
 	char delName[MAXNAME];
 
 	printf("»èÁ¦ÇÏ½Ç È¸¿øÀÇ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä : ");
-	fflush(stdin);
 	scanf("%s", delName);
 	
 	prevNode = head; //ÀÌÀü³ëµå¸¦ Çì´õ³ëµå·Î ¼³Á¤
@@ -278,7 +284,6 @@ void deleteList(addbook *head) //µ¥ÀÌÅÍ »èÁ¦
 		if (strcmp(currNode->name, delName) == 0)
 		{
 			printf("<%s> È¸¿øÀ» »èÁ¦ÇÕ´Ï´Ù.", delName);
-			fflush(stdin);
 			_getch();
 
 			prevNode->link = prevNode->link->link;
@@ -295,14 +300,12 @@ void deleteList(addbook *head) //µ¥ÀÌÅÍ »èÁ¦
 
 	if (check == 0) //È¸¿øÀÌ ¾ø´Ù¸é
 	{
-		printf("\n »èÁ¦ÇÏ·Á´Â È¸¿øÁ¤º¸°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.\n");
-		printf("(Press enter to menu)\n");
-		fflush(stdin);
+		printf("\n»èÁ¦ÇÏ·Á´Â È¸¿øÁ¤º¸°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù. (Press enter to menu)\n");
 		_getch();
 	}
 }
 
-void selectonSort(addbook *head) //ÀÌ¸§À» ¿À¸§Â÷¼øÀ¸·Î Á¤·Ä
+void selectionSort(addbook *head) //ÀÌ¸§À» ¿À¸§Â÷¼øÀ¸·Î Á¤·Ä
 {
 	addbook *compNode; //±âÁØÀ§Ä¡¸¦ °¡¸£Å°´Â ³ëµå
 	addbook *nextNode; //ºñ±³´ë»ó ³ëµå
@@ -340,21 +343,93 @@ void selectonSort(addbook *head) //ÀÌ¸§À» ¿À¸§Â÷¼øÀ¸·Î Á¤·Ä
 				}
 			}
 		}
-		printf("\n Á¤·ÄÀ» ¿Ï·áÇß½À´Ï´Ù.\n");
-		printf("(Press enter to menu)\n");
-		fflush(stdin);
+		printf("\nÁ¤·ÄÀ» ¿Ï·áÇß½À´Ï´Ù. (Press enter to menu)\n");
 		_getch();
 	}
 	else
 	{
-		printf("\n Á¤·ÄÇÒ µ¥ÀÌÅÍ°¡ ¾ø½À´Ï´Ù.\n");
-		printf("(Press enter to menu)\n");
-		fflush(stdin);
+		printf("\nÁ¤·ÄÇÒ µ¥ÀÌÅÍ°¡ ¾ø½À´Ï´Ù. (Press enter to menu)\n");
 		_getch();
 	}
 }
 
-int saveData(addbook *head)
+int saveData(addbook *head) //ÀúÀåµÈ È¸¿øÀÇ Á¤º¸¸¦ ÆÄÀÏ¿¡ ÀúÀåÇÔ
 {
+	FILE *fp;
+	addbook *list;
 
+	list = head->link;
+
+	if ((fp = fopen("address_list.txt", "a")) == NULL)
+	{
+		return 1;
+	}
+
+	while (list != NULL)
+	{
+		fprintf(fp, "%s %s %s %s\n", list->name, list->birthday, list->phone, list->address);
+		list = list->link;
+	}
+	fclose(fp);
+	return 0;
+}
+
+void getFile()
+{
+	FILE *fp;
+	char buffer[30] = {0, };
+	addbook *tmp, *newNode;
+
+	fp = fopen("address_list.txt", "r");
+
+	if (fp == NULL)
+	{
+		printf("ÀÐ¾î¿Â ÆÄÀÏÀÇ µ¥ÀÌÅÍ°¡ ¾ø½À´Ï´Ù.\n");
+		return;
+	}
+	else
+	{
+		while (!feof(fp))
+		{
+			newNode = (addbook *)malloc(sizeof(addbook));
+			fgets(buffer, 30, fp);
+
+			if (strlen(buffer) == 0)
+			{
+				break;
+			}
+			buffer[strlen(buffer) - 1] = '\0';
+			fscanf(fp, "%s", newNode->name);
+
+			fgets(buffer, 30, fp);
+			buffer[strlen(buffer) - 1] = '\0';
+			fscanf(fp, "%s", newNode->birthday);
+
+			fgets(buffer, 30, fp);
+			buffer[strlen(buffer) - 1] = '\0';
+			fscanf(fp, "%s", newNode->phone);
+
+			fgets(buffer, 30, fp);
+			if (buffer[strlen(buffer) - 1] == '\n') 
+			{
+				buffer[strlen(buffer) - 1] = '\0';
+			}
+			fscanf(fp, "%s", newNode->address);
+
+			if (head == NULL)
+			{
+				head = newNode;
+				newNode->link = NULL;
+				tmp = head;
+			}
+			else
+			{
+				tmp->link = newNode;
+				newNode->link = NULL;
+				tmp = newNode;
+			}
+			count = count + 1;
+		}
+	}
+	fclose(fp);
 }
