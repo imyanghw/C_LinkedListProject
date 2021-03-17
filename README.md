@@ -18,10 +18,7 @@
 <img src="https://user-images.githubusercontent.com/76413580/111422553-39a28980-8732-11eb-9a61-1244867263c6.png"></image>
 
 ## Screenshots
-> 시나리오 : 신규고객 양동이라는 사람이 비디오를 대여, 반납을 진행한다.  
-시나리오 테스트를 위하여 대여일자를 8일전으로 시간을 세팅하고 반납일자를 현재시간으로 세팅하여     
-하루 연체가 진행되어 연체 1일에 해당하는 요금을 안내한다. 
->>[비디오 대여 관리.pdf](https://github.com/imyanghw/C_MiniProject/files/6149102/default.pdf)
+>[주소록 관리.pdf](https://github.com/imyanghw/C_LinkedListProject/files/6154504/default.pdf)
 
 ## 프로젝트 고찰
 구조체를 사용하여 기능에 해당하는 멤버 변수들을 관리하기 용이하고 메뉴방식의<br>
