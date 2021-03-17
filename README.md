@@ -15,7 +15,7 @@
 - 입력데이터 파일에 저장
 
 ## Dataflow
-<img src="https://user-images.githubusercontent.com/76413580/111266596-1c0bec00-866e-11eb-91ca-e15a5171377b.png"></image>
+<img src="https://user-images.githubusercontent.com/76413580/111422553-39a28980-8732-11eb-9a61-1244867263c6.png"></image>
 
 ## Screenshots
 > 시나리오 : 신규고객 양동이라는 사람이 비디오를 대여, 반납을 진행한다.  
